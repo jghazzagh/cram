@@ -2,493 +2,2108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>John Ghazzagh | Coordinator of Instructional Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CRAM! The Mischievous Goat Simulator</title>
+    <!-- Tailwind CSS for high fidelity layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for cartoonish retro feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --mcc-blue: #164173;
-            --mcc-dark: #0f2c52;
-            --accent-gold: #ffb300;
-            --bg-light: #f8f9fa;
-            --text-dark: #212529;
-            --text-muted: #6c757d;
-            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            font-family: 'Quicksand', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
         }
-
-        /* Modern Navigation Bar */
-        header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: var(--transition-smooth);
+        .title-font {
+            font-family: 'Fredoka One', cursive;
         }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Custom scrollbar for shop */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--mcc-blue);
-            text-decoration: none;
-            letter-spacing: 0.5px;
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
-
-        nav {
-            display: flex;
-            gap: 25px;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
-
-        nav a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition-smooth);
-            position: relative;
+        /* Shake animation for hit impacts */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-5px, 2px); }
+            20%, 40%, 60%, 80% { transform: translate(5px, -2px); }
         }
-
-        nav a:hover, nav a.active {
-            color: var(--mcc-blue);
-        }
-
-        /* Hero Splash Showcase Frame */
-        .hero {
-            padding: 160px 20px 100px 20px;
-            background: linear-gradient(135deg, #ffffff 0%, #eef3f8 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hero-container {
-            max-width: 1100px;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        @media (min-width: 768px) {
-            .hero-container { grid-template-columns: 1.2fr 0.8fr; }
-        }
-
-        .hero-text h1 {
-            font-size: 2.8rem;
-            color: var(--mcc-dark);
-            line-height: 1.2;
-            margin-bottom: 15px;
-        }
-
-        .hero-text h2 {
-            font-size: 1.4rem;
-            color: var(--mcc-blue);
-            font-weight: 500;
-            margin-bottom: 25px;
-        }
-
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 35px;
-            max-width: 600px;
-        }
-
-        .cta-btn {
-            display: inline-block;
-            background-color: var(--mcc-blue);
-            color: white;
-            text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(22, 65, 115, 0.2);
-            transition: var(--transition-smooth);
-        }
-
-        .cta-btn:hover {
-            background-color: var(--mcc-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(22, 65, 115, 0.3);
-        }
-
-        .hero-image-wrapper {
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-image {
-            width: 320px;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 8px solid white;
-            box-shadow: var(--card-shadow);
-            z-index: 2;
-        }
-
-        .image-bg-blob {
-            position: absolute;
-            width: 340px;
-            height: 340px;
-            background-color: #e2ecf5;
-            border-radius: 50%;
-            top: -10px;
-            z-index: 1;
-            animation: pulse 4s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        /* Sections Layout */
-        .section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            color: var(--mcc-dark);
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
-            background-color: var(--accent-gold);
-            margin: 12px auto 0 auto;
-            border-radius: 2px;
-        }
-
-        /* Interactive Showcase Grid */
-        .filter-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .filter-btn {
-            background: white;
-            border: 1px solid #e0e0e0;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition-smooth);
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--mcc-blue);
-            color: white;
-            border-color: var(--mcc-blue);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-
-        .portfolio-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: var(--transition-smooth);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-body {
-            padding: 25px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-tag {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: var(--mcc-blue);
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .card-body h3 {
-            color: var(--mcc-dark);
-            margin-bottom: 10px;
-            font-size: 1.25rem;
-        }
-
-        .card-body p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .card-link {
-            margin-top: auto;
-            color: var(--mcc-blue);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .card-link:hover {
-            color: var(--mcc-dark);
-        }
-
-        /* Core Philosophy Timeline */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            width: 2px;
-            background-color: #e0e0e0;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            padding: 20px 40px;
-            position: relative;
-            width: 50%;
-            background: transparent;
-        }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            right: -8px;
-            background-color: white;
-            border: 4px solid var(--mcc-blue);
-            border-radius: 50%;
-            top: 25px;
-            z-index: 1;
-        }
-
-        .left { left: 0; text-align: right; }
-        .right { left: 50%; }
-
-        .right::after { left: -8px; }
-
-        .timeline-content {
-            padding: 20px;
-            background: white;
-            position: relative;
-            border-radius: 8px;
-            box-shadow: var(--card-shadow);
-        }
-
-        @media (max-width: 767px) {
-            .timeline::before { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 20px; text-align: left; }
-            .timeline-item::after { left: 23px; }
-            .left { left: 0; }
-        }
-
-        /* Footer Layout Elements */
-        footer {
-            background-color: var(--mcc-dark);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        footer p {
-            opacity: 0.7;
+        .shake-screen {
+            animation: shake 0.2s ease-in-out;
         }
     </style>
 </head>
-<body>
+<body class="bg-stone-900 text-white overflow-hidden w-full h-screen flex items-center justify-center relative">
 
-    <header id="main-header">
-        <div class="nav-container">
-            <a href="#" class="logo">John Ghazzagh</a>
-            <nav>
-                <a href="#home" class="active">Home</a>
-                <a href="#work">Featured Work</a>
-                <a href="#philosophy">Design Philosophy</a>
-            </nav>
-        </div>
-    </header>
-
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-text">
-                <h1>Hi, I'm John Ghazzagh</h1>
-                <h2>Coordinator of Instructional Design</h2>
-                <p>I build elegant, highly intentional learning systems that prioritize accessibility, digital clarity, and robust learner interaction models at McLennan Community College.</p>
-                <a href="#work" class="cta-btn">Explore Course Modules</a>
-            </div>
-            <div class="hero-image-wrapper">
-                <div class="image-bg-blob"></div>
-                <img src="jcray.png" alt="John Ghazzagh Photo" class="hero-image">
-            </div>
-        </div>
-    </section>
-
-    <section id="work" class="section">
-        <h2 class="section-title">Featured Content & Ecosystems</h2>
+    <!-- GAME CANVAS WRAPPER -->
+    <div id="gameContainer" class="relative w-full h-full max-w-6xl max-h-[850px] md:rounded-3xl overflow-hidden bg-emerald-800 shadow-2xl flex flex-col border border-stone-800">
         
-        <div class="filter-tabs">
-            <button class="filter-btn active" onclick="filterPortfolio('all')">Show All</button>
-            <button class="filter-btn" onclick="filterPortfolio('modules')">Interactive Modules</button>
-            <button class="filter-btn" onclick="filterPortfolio('syllabus')">Syllabi</button>
+        <!-- CANVAS ELEMENT -->
+        <canvas id="gameCanvas" class="w-full flex-grow block bg-emerald-700"></canvas>
+
+        <!-- TOP BAR HUD (Always visible during gameplay) -->
+        <div id="hud" class="absolute top-4 left-4 right-4 flex justify-between items-start pointer-events-none z-10 hidden">
+            <!-- Left Side: Mischief & Score -->
+            <div class="flex flex-col gap-2">
+                <div class="bg-black/60 backdrop-blur-md px-4 py-2 rounded-2xl flex items-center gap-3 border border-white/10 shadow-lg pointer-events-auto">
+                    <span class="text-3xl">🐐</span>
+                    <div>
+                        <div class="text-xs text-stone-300 uppercase tracking-widest font-bold">Mischief Score</div>
+                        <div id="scoreVal" class="text-2xl title-font text-amber-400">0</div>
+                    </div>
+                </div>
+                <!-- Mischief Rank Title -->
+                <div class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-xl border border-white/10 shadow-md text-xs font-bold text-emerald-300 pointer-events-auto self-start">
+                    Rank: <span id="rankTitle" class="title-font text-yellow-300">Quiet Grazer</span>
+                </div>
+            </div>
+
+            <!-- Center: Cooldowns & Action Stats -->
+            <div class="flex gap-2 pointer-events-auto">
+                <!-- Stamina / Ram Bar -->
+                <div class="bg-black/60 backdrop-blur-md p-3 rounded-2xl border border-white/10 w-36 shadow-lg flex flex-col gap-1">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span>⚡ RAM (Space)</span>
+                        <span id="ramPercent" class="text-cyan-300">100%</span>
+                    </div>
+                    <div class="w-full bg-stone-800 h-3 rounded-full overflow-hidden border border-stone-700">
+                        <div id="ramBar" class="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-full transition-all duration-75"></div>
+                    </div>
+                </div>
+
+                <!-- Diet / Fart Bar -->
+                <div class="bg-black/60 backdrop-blur-md p-3 rounded-2xl border border-white/10 w-36 shadow-lg flex flex-col gap-1">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span>💨 FART (Shift)</span>
+                        <span id="fartPercent" class="text-lime-400">100%</span>
+                    </div>
+                    <div class="w-full bg-stone-800 h-3 rounded-full overflow-hidden border border-stone-700">
+                        <div id="fartBar" class="bg-gradient-to-r from-lime-400 to-green-600 h-full w-full transition-all duration-75"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Money & Level/Pause -->
+            <div class="flex flex-col items-end gap-2 pointer-events-auto">
+                <div class="bg-black/60 backdrop-blur-md px-4 py-2 rounded-2xl flex items-center gap-3 border border-white/10 shadow-lg">
+                    <span class="text-3xl">🪙</span>
+                    <div>
+                        <div class="text-xs text-stone-300 uppercase tracking-widest font-bold">Clover Coins</div>
+                        <div id="coinVal" class="text-2xl title-font text-yellow-300">0</div>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <!-- Shop Button -->
+                    <button id="openShopBtn" class="bg-yellow-500 hover:bg-yellow-400 text-stone-900 font-bold px-4 py-2 rounded-xl border-b-4 border-yellow-700 active:border-b-0 active:translate-y-[4px] transition-all flex items-center gap-1 shadow-lg text-sm">
+                        🛒 Shop (P)
+                    </button>
+                    <!-- Audio Toggle -->
+                    <button id="soundToggleBtn" class="bg-stone-800 hover:bg-stone-700 border border-stone-700 p-2 rounded-xl flex items-center justify-center shadow-lg">
+                        🔊
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="portfolio-grid" id="portfolio-workspace">
-            <div class="portfolio-card" data-category="modules">
-                <div class="card-body">
-                    <div class="card-tag">Interactive Module</div>
-                    <h3>Verbs & Adverbs Studio</h3>
-                    <p>A highly tactile grammar learning environment scaffolded with embedded Text-To-Speech features tailored for low-level reading accessibility profiles.</p>
-                    <a href="lesson.html" class="card-link">Launch Interactive Module →</a>
+        <!-- START/MAIN MENU OVERLAY -->
+        <div id="mainMenu" class="absolute inset-0 bg-stone-950/90 z-20 flex flex-col items-center justify-center p-6 text-center">
+            <div class="max-w-md w-full flex flex-col items-center">
+                
+                <!-- Animated Goat SVG Icon -->
+                <div class="w-32 h-32 mb-4 bg-emerald-600 rounded-full flex items-center justify-center border-4 border-emerald-400 shadow-2xl relative overflow-visible animate-bounce">
+                    <!-- Custom Styled Vector-like Goat Head in Circle -->
+                    <svg class="w-24 h-24 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,4C14.5,4 16.5,5.2 17.3,7H6.7C7.5,5.2 9.5,4 12,4M12,18C8.13,18 5,14.87 5,11C5,9.58 5.43,8.26 6.16,7.16L12,14L17.84,7.16C18.57,8.26 19,9.58 19,11C19,14.87 15.87,18 12,18Z"/>
+                    </svg>
+                    <span class="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full border border-white rotate-12 uppercase tracking-wider">CRAM Edition</span>
                 </div>
-            </div>
 
-            <div class="portfolio-card" data-category="syllabus">
-                <div class="card-body">
-                    <div class="card-tag">Interactive Syllabus</div>
-                    <h3>POFT 1301 Core Syllabus</h3>
-                    <p>Transforming the standard static institutional roadmap into a scannable dashboard environment containing an interactive GPA/Grade evaluation engine.</p>
-                    <a href="lesson.html" class="card-link">View Canvas Matrix →</a>
+                <h1 class="text-5xl md:text-6xl title-font tracking-wide mb-2 text-yellow-400 drop-shadow-[0_4px_6px_rgba(0,0,0,0.6)]">CRAM!</h1>
+                <p class="text-stone-300 text-sm md:text-base font-medium max-w-sm mb-6">
+                    You are a hyper-aggressive park goat. Your only goal is to run around, yell <strong class="text-orange-400">"CRAM!"</strong> to ram tourists into the stratosphere, and fart noxious green clouds on anyone in your path!
+                </p>
+
+                <!-- Instructions Board -->
+                <div class="bg-stone-900/90 border border-stone-800 rounded-2xl p-4 w-full mb-6 text-left text-xs space-y-2 text-stone-300 shadow-inner">
+                    <div class="text-amber-300 font-bold text-center border-b border-stone-800 pb-2 mb-1 text-sm">🎮 GOAT CONTROLS</div>
+                    <div class="flex justify-between items-center"><span class="font-bold text-white">Move:</span> <span>WASD / Arrow Keys / Virtual Stick</span></div>
+                    <div class="flex justify-between items-center"><span class="font-bold text-cyan-400">Ram Attack:</span> <span>SPACEBAR (Shout "CRAM!" & Charge!)</span></div>
+                    <div class="flex justify-between items-center"><span class="font-bold text-lime-400">Gas Cloud Fart:</span> <span>SHIFT key (Toxic stun radius)</span></div>
+                    <div class="flex justify-between items-center"><span class="font-bold text-yellow-400">Open Shop:</span> <span>P key (Upgrade your biological weaponry)</span></div>
                 </div>
-            </div>
 
-            <div class="portfolio-card" data-category="modules">
-                <div class="card-body">
-                    <div class="card-tag">Interactive Module</div>
-                    <h3>Bite-Sized Rhetoric Matrix</h3>
-                    <p>Clean modal interfaces constructed to break complex institutional guidelines down into accessible, step-by-step milestones.</p>
-                    <a href="#" class="card-link" onclick="alert('Module blueprint loading placeholder...'); return false;">Review Architecture Plan →</a>
+                <!-- Custom Sound Test Button -->
+                <button id="testAudioBtn" class="mb-4 text-xs font-bold text-stone-400 hover:text-white transition flex items-center gap-1 bg-stone-900 border border-stone-800 px-3 py-1.5 rounded-lg">
+                    🔊 Click to test Goat Fart Synthesizer
+                </button>
+
+                <!-- Big Shiny Start Button -->
+                <button id="startGameBtn" class="w-full py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-stone-900 font-black text-xl rounded-2xl shadow-xl border-b-8 border-amber-800 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-wider title-font">
+                    Let's Cause Chaos!
+                </button>
+            </div>
+        </div>
+
+        <!-- UPGRADE SHOP MODAL OVERLAY -->
+        <div id="shopModal" class="absolute inset-0 bg-stone-950/95 z-20 flex items-center justify-center p-4 hidden">
+            <div class="max-w-2xl w-full bg-stone-900 border border-stone-800 rounded-3xl p-6 flex flex-col max-h-full">
+                <!-- Shop Header -->
+                <div class="flex justify-between items-center border-b border-stone-800 pb-4 mb-4">
+                    <div>
+                        <h2 class="text-3xl title-font text-yellow-400">🐐 The Billy-Goat black market</h2>
+                        <p class="text-stone-400 text-xs">Spend hard-earned Clover Coins to level up your terror potential.</p>
+                    </div>
+                    <button id="closeShopBtn" class="bg-stone-800 hover:bg-stone-700 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg border border-stone-700 transition">
+                        ✕
+                    </button>
+                </div>
+
+                <!-- Coins Display in Shop -->
+                <div class="bg-stone-950 px-4 py-3 rounded-2xl flex justify-between items-center mb-4 border border-stone-800">
+                    <span class="text-stone-300 font-bold text-sm">Your Wallet:</span>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xl">🪙</span>
+                        <span id="shopCoinVal" class="text-2xl title-font text-yellow-300">0</span>
+                        <span class="text-xs text-stone-500">coins</span>
+                    </div>
+                </div>
+
+                <!-- Shop Items List -->
+                <div class="flex-grow overflow-y-auto pr-1 space-y-3" id="shopItemsContainer">
+                    <!-- Item 1: Titanium Horns -->
+                    <div class="bg-stone-950/60 hover:bg-stone-950 border border-stone-800 hover:border-stone-700 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition">
+                        <div class="flex items-start gap-3">
+                            <div class="text-3xl p-3 bg-cyan-950 border border-cyan-800 rounded-xl">🤘</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base">Titanium Horn Extenders</h3>
+                                <p class="text-xs text-stone-400">Increases Ram charge velocity, damage, and makes tourists fly much higher!</p>
+                                <span class="text-xs font-semibold text-cyan-400">Current Level: <span id="lvlHorns">1</span>/5</span>
+                            </div>
+                        </div>
+                        <button onclick="buyUpgrade('horns')" id="buyHornsBtn" class="w-full sm:w-auto px-5 py-2.5 bg-cyan-600 hover:bg-cyan-500 disabled:bg-stone-800 disabled:text-stone-600 text-stone-950 font-extrabold rounded-xl transition flex items-center justify-center gap-2 border-b-4 border-cyan-800 active:border-b-0 active:translate-y-0.5 text-sm">
+                            <span>Buy</span>
+                            <span class="flex items-center gap-0.5 bg-black/10 px-2 py-0.5 rounded-md"><span id="costHorns">50</span>🪙</span>
+                        </button>
+                    </div>
+
+                    <!-- Item 2: Spicy Chili Diet -->
+                    <div class="bg-stone-950/60 hover:bg-stone-950 border border-stone-800 hover:border-stone-700 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition">
+                        <div class="flex items-start gap-3">
+                            <div class="text-3xl p-3 bg-lime-950 border border-lime-800 rounded-xl">🌶️</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base">Spicy Beans Diet</h3>
+                                <p class="text-xs text-stone-400">Enhances your fart radius and multiplies the toxic lingering duration of the gas cloud!</p>
+                                <span class="text-xs font-semibold text-lime-400">Current Level: <span id="lvlFart">1</span>/5</span>
+                            </div>
+                        </div>
+                        <button onclick="buyUpgrade('fart')" id="buyFartBtn" class="w-full sm:w-auto px-5 py-2.5 bg-lime-500 hover:bg-lime-400 disabled:bg-stone-800 disabled:text-stone-600 text-stone-950 font-extrabold rounded-xl transition flex items-center justify-center gap-2 border-b-4 border-lime-700 active:border-b-0 active:translate-y-0.5 text-sm">
+                            <span>Buy</span>
+                            <span class="flex items-center gap-0.5 bg-black/10 px-2 py-0.5 rounded-md"><span id="costFart">75</span>🪙</span>
+                        </button>
+                    </div>
+
+                    <!-- Item 3: Rocket Shoes -->
+                    <div class="bg-stone-950/60 hover:bg-stone-950 border border-stone-800 hover:border-stone-700 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition">
+                        <div class="flex items-start gap-3">
+                            <div class="text-3xl p-3 bg-yellow-950 border border-yellow-800 rounded-xl">👟</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base">Rocket Hooves</h3>
+                                <p class="text-xs text-stone-400">Increases your base walking speed. Nobody can run away from you.</p>
+                                <span class="text-xs font-semibold text-yellow-400">Current Level: <span id="lvlSpeed">1</span>/5</span>
+                            </div>
+                        </div>
+                        <button onclick="buyUpgrade('speed')" id="buySpeedBtn" class="w-full sm:w-auto px-5 py-2.5 bg-yellow-500 hover:bg-yellow-400 disabled:bg-stone-800 disabled:text-stone-600 text-stone-950 font-extrabold rounded-xl transition flex items-center justify-center gap-2 border-b-4 border-yellow-700 active:border-b-0 active:translate-y-0.5 text-sm">
+                            <span>Buy</span>
+                            <span class="flex items-center gap-0.5 bg-black/10 px-2 py-0.5 rounded-md"><span id="costSpeed">60</span>🪙</span>
+                        </button>
+                    </div>
+
+                    <!-- Item 4: Clover Magnet -->
+                    <div class="bg-stone-950/60 hover:bg-stone-950 border border-stone-800 hover:border-stone-700 p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 transition">
+                        <div class="flex items-start gap-3">
+                            <div class="text-3xl p-3 bg-purple-950 border border-purple-800 rounded-xl">🧲</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base">Golden Clover Magnet</h3>
+                                <p class="text-xs text-stone-400">Sucks dropped coins toward the goat from a wider radius.</p>
+                                <span class="text-xs font-semibold text-purple-400">Current Level: <span id="lvlMagnet">1</span>/5</span>
+                            </div>
+                        </div>
+                        <button onclick="buyUpgrade('magnet')" id="buyMagnetBtn" class="w-full sm:w-auto px-5 py-2.5 bg-purple-500 hover:bg-purple-400 disabled:bg-stone-800 disabled:text-stone-600 text-stone-950 font-extrabold rounded-xl transition flex items-center justify-center gap-2 border-b-4 border-purple-700 active:border-b-0 active:translate-y-0.5 text-sm">
+                            <span>Buy</span>
+                            <span class="flex items-center gap-0.5 bg-black/10 px-2 py-0.5 rounded-md"><span id="costMagnet">40</span>🪙</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4 border-t border-stone-800 pt-4 flex justify-between items-center">
+                    <span class="text-xs text-stone-500">Hit Escape or 'P' to resume your path of chaos.</span>
+                    <button id="resumeShopBtn" class="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-stone-950 font-bold px-6 py-2 rounded-xl border-b-4 border-amber-800 active:border-b-0 active:translate-y-0.5 transition-all text-sm">
+                        Back to Ramming!
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section id="philosophy" class="section" style="background-color: #ffffff;">
-        <h2 class="section-title">Design Philosophy Matrix</h2>
-        <div class="timeline">
-            <div class="timeline-item left">
-                <div class="timeline-content">
-                    <h3>Universal Design & Accessibility</h3>
-                    <p>Building semantic paths ensuring learners of all cognitive backgrounds parse technical instruction quickly and accurately.</p>
+        <!-- BUSTED / GAME OVER OVERLAY -->
+        <div id="gameOverMenu" class="absolute inset-0 bg-red-950/95 z-20 flex flex-col items-center justify-center p-6 text-center hidden">
+            <div class="max-w-md w-full flex flex-col items-center">
+                
+                <div class="text-7xl mb-4 animate-bounce">🚨</div>
+                <h1 class="text-5xl title-font text-red-500 mb-2 drop-shadow-md">BUSTED!</h1>
+                <p class="text-stone-300 text-sm max-w-sm mb-6">
+                    The local animal control rangers finally managed to put a sedative dart in your butt! Let's review the absolute devastation you left behind.
+                </p>
+
+                <!-- Post-Game Stats Card -->
+                <div class="bg-stone-900 border border-stone-800 rounded-3xl p-6 w-full mb-6 text-left space-y-3 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 text-9xl text-stone-800/20 title-font font-black select-none pointer-events-none">GOAT</div>
+                    <div class="text-amber-400 font-bold border-b border-stone-800 pb-2 mb-2 text-center tracking-wider text-base">CHAMPION RAP-SHEET</div>
+                    <div class="flex justify-between items-center"><span class="text-stone-400 text-sm">Total Mischief Score:</span> <span id="finalScore" class="font-extrabold text-xl text-yellow-300">0</span></div>
+                    <div class="flex justify-between items-center"><span class="text-stone-400 text-sm">Crammed Tourists Flying:</span> <span id="finalCrams" class="font-bold text-white text-lg">0</span></div>
+                    <div class="flex justify-between items-center"><span class="text-stone-400 text-sm">Biochemical Farts Unleased:</span> <span id="finalFarts" class="font-bold text-lime-400 text-lg">0</span></div>
+                    <div class="flex justify-between items-center"><span class="text-stone-400 text-sm">Ranger Escapes:</span> <span id="finalRangers" class="font-bold text-cyan-400 text-lg">0</span></div>
+                    <div class="flex justify-between items-center"><span class="text-stone-400 text-sm">Ultimate Criminal Title:</span> <span id="finalTitle" class="font-black text-pink-400 text-sm tracking-wide">None</span></div>
                 </div>
-            </div>
-            <div class="timeline-item right">
-                <div class="timeline-content">
-                    <h3>Tactile & Active Learning</h3>
-                    <p>Replacing passive reading loops with interactive text token matching and immediate visual feedback engines.</p>
-                </div>
-            </div>
-            <div class="timeline-item left">
-                <div class="timeline-content">
-                    <h3>Professional Clarity</h3>
-                    <p>Stripping away wordy construction models to deliver clean, highly readable course layouts optimized for student retention.</p>
-                </div>
+
+                <!-- Replay Button -->
+                <button id="restartGameBtn" class="w-full py-4 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 text-white font-black text-xl rounded-2xl shadow-xl border-b-8 border-rose-800 active:border-b-0 active:translate-y-1 transition-all uppercase tracking-wider title-font">
+                    Break Out of Jail!
+                </button>
             </div>
         </div>
-    </section>
 
-    <footer>
-        <p>© 2026 John Ghazzagh — McLennan Community College. All rights reserved.</p>
-    </footer>
+        <!-- ON-SCREEN MOBILE CONTROLS (Only visible on touch devices) -->
+        <div id="mobileControls" class="absolute bottom-6 left-6 right-6 flex justify-between items-end pointer-events-none z-10 hidden">
+            <!-- Left Side: Custom Touch Joystick -->
+            <div id="joystickZone" class="w-32 h-32 bg-black/40 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center relative pointer-events-auto active:bg-black/50 select-none shadow-lg">
+                <div id="joystickKnob" class="w-12 h-12 bg-white/80 hover:bg-white rounded-full shadow-md cursor-grab active:cursor-grabbing transition-transform duration-75 absolute"></div>
+            </div>
+
+            <!-- Right Side: Action Buttons -->
+            <div class="flex flex-col gap-3 pointer-events-auto select-none">
+                <!-- Fart Button -->
+                <button id="mobileFartBtn" class="w-16 h-16 bg-gradient-to-r from-lime-500 to-green-600 active:scale-95 text-white font-extrabold rounded-full border-4 border-lime-400 flex flex-col items-center justify-center shadow-xl text-xs">
+                    <span class="text-lg">💨</span>
+                    <span>FART</span>
+                </button>
+                <!-- Ram Button -->
+                <button id="mobileRamBtn" class="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-600 active:scale-95 text-white font-extrabold rounded-full border-4 border-cyan-400 flex flex-col items-center justify-center shadow-xl text-sm">
+                    <span class="text-xl">🐐</span>
+                    <span class="title-font">CRAM!</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- NOTIFICATION BANNER (e.g. Combo, Busted Danger, Rank Up) -->
+        <div id="gameNotification" class="absolute top-24 left-1/2 transform -translate-x-1/2 bg-yellow-500/90 border border-yellow-400 text-stone-950 font-black px-6 py-2 rounded-full shadow-2xl transition-all duration-300 scale-0 z-10 text-sm uppercase tracking-wider title-font">
+            Combo x5!
+        </div>
+
+    </div>
+
+    <!-- AUDIO NOTIFICATION TO ENABLE SYNTH -->
+    <div id="audioHint" class="absolute bottom-2 right-2 text-[10px] text-stone-500 hidden pointer-events-none">
+        Procedural retro Audio Synthesized via Web Audio API.
+    </div>
 
     <script>
-        // Smooth Active Link Navigation Tracking Matrix
-        const links = document.querySelectorAll('nav a');
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            sections.forEach(sec => {
-                const topSpace = sec.offsetTop;
-                if (pageYOffset >= topSpace - 120) {
-                    current = sec.getAttribute('id');
-                }
-            });
-            links.forEach(a => {
-                a.classList.remove('active');
-                if (a.getAttribute('href').includes(current)) {
-                    a.classList.add('active');
-                }
-            });
-        });
+        /*************************************************************
+         * 1. GLOBAL INITIALIZATION & CONFIGURATION
+         *************************************************************/
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameContainer = document.getElementById('gameContainer');
 
-        // Portfolio Category Toggling Routing Matrix
-        function filterPortfolio(category) {
-            // Update Active Buttons Elements Focus
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+        // Game Configuration
+        const MAP_SIZE = 3000; // Large scrolling open-world park
+        let camera = { x: 0, y: 0, zoom: 1 };
+        
+        // Sound and Music States
+        let soundEnabled = true;
+        let audioCtx = null;
 
-            // Manage Card Grid Filter Transitions Safely
-            const cards = document.querySelectorAll('.portfolio-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'flex';
-                    setTimeout(() => card.style.opacity = '1', 10);
+        // Upgrades Inventory Model
+        const upgrades = {
+            horns: { lvl: 1, max: 5, baseVal: 50, scale: 1.5, multiplier: 1.3 },
+            fart: { lvl: 1, max: 5, baseVal: 75, scale: 1.6, multiplier: 1.4 },
+            speed: { lvl: 1, max: 5, baseVal: 60, scale: 1.4, multiplier: 1.2 },
+            magnet: { lvl: 1, max: 5, baseVal: 40, scale: 1.5, multiplier: 1.5 }
+        };
+
+        // Game State Variables
+        let gameState = 'menu'; // 'menu', 'playing', 'shop', 'gameover'
+        let lastTime = 0;
+        let score = 0;
+        let coins = 0;
+        let stats = {
+            totalCrams: 0,
+            totalFarts: 0,
+            escapedRangers: 0
+        };
+
+        // Keyboard Controls State
+        const keys = {
+            w: false, a: false, s: false, d: false,
+            ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false,
+            Space: false, Shift: false
+        };
+
+        // Mobile touch control simulation variables
+        let isTouchDevice = false;
+        let joystickActive = false;
+        let joystickStart = { x: 0, y: 0 };
+        let joystickVector = { x: 0, y: 0 };
+
+        // Entities List
+        let goat = null;
+        let peds = [];
+        let props = []; // Trees, bushes, trash cans, benches
+        let coinsList = [];
+        let particles = [];
+        let fartClouds = [];
+        let messages = []; // Float text triggers e.g., "CRAM!", "+50"
+
+        /*************************************************************
+         * 2. AUDIO SYNTHESIZERS (Procedural Sound Generator)
+         *************************************************************/
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Custom Web Audio Fart Synth
+        function playFartSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+            
+            // Complex Fart Generation using multiple low frequency oscillators
+            const numWaves = 3;
+            for (let i = 0; i < numWaves; i++) {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                const filter = audioCtx.createBiquadFilter();
+
+                osc.type = 'sawtooth';
+                // Random natural frequency drift
+                const baseFreq = 70 + Math.random() * 40 - (i * 15);
+                osc.frequency.setValueAtTime(baseFreq, time);
+                // Pitch fall off
+                osc.frequency.exponentialRampToValueAtTime(15 + Math.random() * 10, time + 0.35 + (i * 0.1));
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(300, time);
+                filter.frequency.exponentialRampToValueAtTime(80, time + 0.4);
+
+                gain.gain.setValueAtTime(0.3 / numWaves, time);
+                gain.gain.exponentialRampToValueAtTime(0.01, time + 0.35 + (i * 0.1));
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(time);
+                osc.stop(time + 0.5);
+            }
+        }
+
+        // Custom Sound for Ram Action
+        function playRamSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(150, time);
+            osc.frequency.exponentialRampToValueAtTime(600, time + 0.15); // Quick sweep up for excitement!
+
+            gain.gain.setValueAtTime(0.2, time);
+            gain.gain.linearRampToValueAtTime(0.01, time + 0.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + 0.2);
+        }
+
+        // Voice Shout "CRAM!" using Speech Synthesis
+        function shoutCram() {
+            if (!soundEnabled) return;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance("Cram!");
+                utterance.pitch = 0.5 + Math.random() * 0.6; // Deep goofy or squeaky voices
+                utterance.rate = 1.6 + Math.random() * 0.5; // Fast energetic shout
+                utterance.volume = 1.0;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                // Fallback synth beep in case speech synthesis is blocked
+                playRamSound();
+            }
+        }
+
+        // Hit Impact Sound
+        function playImpactSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+
+            // Explosion impact synth
+            const osc = audioCtx.createOscillator();
+            const noise = audioCtx.createOscillator(); // Just simple triangle
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(120, time);
+            osc.frequency.exponentialRampToValueAtTime(40, time + 0.25);
+
+            gain.gain.setValueAtTime(0.4, time);
+            gain.gain.exponentialRampToValueAtTime(0.01, time + 0.3);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + 0.3);
+        }
+
+        // Coins collection jingle
+        function playCoinSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(900, time);
+            osc.frequency.setValueAtTime(1200, time + 0.08);
+
+            gain.gain.setValueAtTime(0.1, time);
+            gain.gain.exponentialRampToValueAtTime(0.01, time + 0.25);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + 0.3);
+        }
+
+        // Powerup Purchase sound
+        function playUpgradeSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(200, time);
+            osc.frequency.linearRampToValueAtTime(400, time + 0.1);
+            osc.frequency.linearRampToValueAtTime(800, time + 0.2);
+
+            gain.gain.setValueAtTime(0.15, time);
+            gain.gain.exponentialRampToValueAtTime(0.01, time + 0.3);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + 0.35);
+        }
+
+        // Busted siren synth
+        function playBustedSound() {
+            if (!soundEnabled) return;
+            initAudio();
+            const time = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(300, time);
+            osc.frequency.linearRampToValueAtTime(150, time + 0.5);
+
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(150, time);
+            osc2.frequency.linearRampToValueAtTime(300, time + 0.5);
+
+            gain.gain.setValueAtTime(0.2, time);
+            gain.gain.exponentialRampToValueAtTime(0.01, time + 1.0);
+
+            osc.connect(gain);
+            osc2.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(time);
+            osc.stop(time + 1.0);
+            osc2.start(time);
+            osc2.stop(time + 1.0);
+        }
+
+        /*************************************************************
+         * 3. GAME CLASS DEFINTIONS (GOAT, PEDESTRIANS, PROPS)
+         *************************************************************/
+        class Goat {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 24;
+                this.angle = 0;
+                
+                // Movement
+                this.vx = 0;
+                this.vy = 0;
+                this.friction = 0.85;
+
+                // Stats / Status
+                this.maxStamina = 100;
+                this.stamina = 100;
+                this.fartCharge = 100;
+
+                // Action Timers
+                this.ramTimer = 0;
+                this.ramCooldown = 0;
+                this.fartCooldown = 0;
+
+                // Aesthetic variables
+                this.legsWobble = 0;
+                this.chewing = 0;
+            }
+
+            getSpeed() {
+                // Returns actual modified speed based on boots upgrade level
+                const baseSpeed = 4.0;
+                const bonus = (upgrades.speed.lvl - 1) * upgrades.speed.multiplier * 0.8;
+                return baseSpeed + bonus;
+            }
+
+            getRamForce() {
+                // Horn power upgrades multiplier
+                return 15 + (upgrades.horns.lvl * 3.5);
+            }
+
+            getFartPotency() {
+                // Radius and duration modifiers for farts
+                return upgrades.fart.lvl * 1.3;
+            }
+
+            update(dt) {
+                // Decrement timers
+                if (this.ramTimer > 0) this.ramTimer -= dt;
+                if (this.ramCooldown > 0) this.ramCooldown -= dt;
+                if (this.fartCooldown > 0) this.fartCooldown -= dt;
+
+                // Update natural status regeneration
+                if (this.ramTimer <= 0) {
+                    this.stamina = Math.min(this.maxStamina, this.stamina + 25 * dt); // Regenerate ram stamina
+                }
+                this.fartCharge = Math.min(100, this.fartCharge + 15 * dt); // Regenerate fart biological ammunition
+
+                // Move Logic
+                let ax = 0;
+                let ay = 0;
+
+                // Read input controls
+                if (joystickActive) {
+                    ax = joystickVector.x * this.getSpeed();
+                    ay = joystickVector.y * this.getSpeed();
                 } else {
-                    card.style.opacity = '0';
-                    card.style.display = 'none';
+                    if (keys.w || keys.ArrowUp) ay = -this.getSpeed();
+                    if (keys.s || keys.ArrowDown) ay = this.getSpeed();
+                    if (keys.a || keys.ArrowLeft) ax = -this.getSpeed();
+                    if (keys.d || keys.ArrowRight) ax = this.getSpeed();
+                }
+
+                // Apply acceleration or trigger Ram boost
+                if (this.ramTimer > 0) {
+                    // Lock angle and go at intense CRAM velocity
+                    const ramSpeed = this.getSpeed() * 3.2;
+                    this.vx = Math.cos(this.angle) * ramSpeed;
+                    this.vy = Math.sin(this.angle) * ramSpeed;
+
+                    // Emit rapid fire dust particles
+                    if (Math.random() < 0.6) {
+                        particles.push(new Particle(
+                            this.x - Math.cos(this.angle) * 15,
+                            this.y - Math.sin(this.angle) * 15,
+                            '#e2e8f0', // dust cloud gray
+                            12 + Math.random() * 8,
+                            -this.vx * 0.2 + (Math.random() - 0.5) * 2,
+                            -this.vy * 0.2 + (Math.random() - 0.5) * 2,
+                            0.6
+                        ));
+                    }
+                } else {
+                    // Normal movement physics
+                    this.vx += ax;
+                    this.vy += ay;
+                    this.vx *= this.friction;
+                    this.vy *= this.friction;
+
+                    if (Math.hypot(this.vx, this.vy) > 0.5) {
+                        this.angle = Math.atan2(this.vy, this.vx);
+                        this.legsWobble += 0.25;
+                    }
+                }
+
+                // Apply velocities
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bound inside map limits
+                this.x = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.x));
+                this.y = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.y));
+
+                // Chew animations
+                this.chewing += 0.05;
+            }
+
+            ram() {
+                if (this.ramCooldown > 0 || this.stamina < 35) return;
+                
+                this.ramTimer = 0.5; // active ram charge duration (secs)
+                this.ramCooldown = 1.0; // cooldown
+                this.stamina -= 35;
+
+                // Play custom audio shouting "CRAM!"
+                shoutCram();
+
+                // Generate flashburst circle
+                for (let i = 0; i < 15; i++) {
+                    const rAngle = Math.random() * Math.PI * 2;
+                    const rSpeed = 3 + Math.random() * 5;
+                    particles.push(new Particle(
+                        this.x, this.y, '#38bdf8', 10,
+                        Math.cos(rAngle) * rSpeed, Math.sin(rAngle) * rSpeed, 0.4
+                    ));
+                }
+
+                // Trigger UI screenshake action
+                triggerScreenShake();
+            }
+
+            fart() {
+                if (this.fartCooldown > 0 || this.fartCharge < 30) return;
+
+                this.fartCooldown = 0.4;
+                this.fartCharge -= 30;
+                stats.totalFarts++;
+
+                playFartSound();
+
+                // Push Fart Cloud Entities outward
+                const fartCount = 10 + (upgrades.fart.lvl * 3);
+                for (let i = 0; i < fartCount; i++) {
+                    const fAngle = this.angle + Math.PI + (Math.random() - 0.5) * 1.5; // Emit out of backside
+                    const fSpeed = 1.5 + Math.random() * 4.0;
+                    fartClouds.push(new FartCloud(
+                        this.x - Math.cos(this.angle) * 15,
+                        this.y - Math.sin(this.angle) * 15,
+                        Math.cos(fAngle) * fSpeed,
+                        Math.sin(fAngle) * fSpeed,
+                        30 * this.getFartPotency()
+                    ));
+                }
+
+                // Float a goofy text above goat
+                spawnMessage(this.x, this.y - 30, "💨 TOXIC BLAST!", "#a3e635");
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+
+                // Horn size & aesthetics level colors
+                let hornColor = '#d6d3d1';
+                let hornSize = 10 + (upgrades.horns.lvl * 3);
+                if (upgrades.horns.lvl >= 3) hornColor = '#cbd5e1'; // Metal shiny
+                if (upgrades.horns.lvl === 5) hornColor = '#fbbf24'; // Golden horn crown
+
+                // Draw Shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                ctx.beginPath();
+                ctx.ellipse(0, 10, this.radius, this.radius * 0.6, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw Goat Body (Chubby Cute Oval)
+                ctx.fillStyle = '#f5f5f4'; // Warm stone white
+                ctx.strokeStyle = '#78716c';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 24, 18, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Chewing grass details
+                if (Math.sin(this.chewing) > 0) {
+                    ctx.fillStyle = '#4ade80';
+                    ctx.fillRect(18, 0, 6, 2);
+                }
+
+                // Draw Head
+                ctx.beginPath();
+                ctx.ellipse(15, -6, 12, 10, Math.PI/12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw Cute Floppy Ears
+                ctx.fillStyle = '#e7e5e4';
+                ctx.beginPath();
+                ctx.ellipse(10, -15, 4, 10, -Math.PI/6, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw Mischievous GOAT Eyes (Rectangular pupils)
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(16, -10, 4, 4);
+                ctx.fillStyle = '#e0f2fe';
+                ctx.fillRect(17, -9, 2, 2);
+
+                // Draw Horns (Varies based on titanium level upgrade)
+                ctx.fillStyle = hornColor;
+                ctx.strokeStyle = '#292524';
+                ctx.lineWidth = 2;
+                
+                // Horn Left
+                ctx.beginPath();
+                ctx.moveTo(8, -12);
+                ctx.quadraticCurveTo(2, -12 - hornSize, -hornSize * 0.4, -10 - hornSize);
+                ctx.quadraticCurveTo(3, -12 - hornSize * 0.6, 8, -10);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Horn Right
+                ctx.beginPath();
+                ctx.moveTo(11, -11);
+                ctx.quadraticCurveTo(5, -11 - hornSize, 3 - hornSize * 0.4, -9 - hornSize);
+                ctx.quadraticCurveTo(6, -11 - hornSize * 0.6, 11, -9);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw Beard (Classic Billy Goat goatee)
+                ctx.fillStyle = '#d6d3d1';
+                ctx.beginPath();
+                ctx.moveTo(17, 2);
+                ctx.lineTo(13, 14);
+                ctx.lineTo(21, 2);
+                ctx.closePath();
+                ctx.fill();
+
+                // Animated Cute Legs Wobble while moving
+                const legWobbleY = Math.sin(this.legsWobble) * 4;
+                ctx.fillStyle = '#78716c';
+                // Front Leg
+                ctx.fillRect(10, 10 + legWobbleY, 4, 8);
+                // Back Leg
+                ctx.fillRect(-15, 10 - legWobbleY, 4, 8);
+
+                // Draw Fart Emitter ring (Glow green if fully loaded)
+                if (this.fartCharge >= 30) {
+                    ctx.fillStyle = 'rgba(132, 204, 22, 0.4)';
+                    ctx.beginPath();
+                    ctx.arc(-22, 0, 5 + Math.sin(Date.now() / 100)*2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Glowing outline during Active RAM mode
+                if (this.ramTimer > 0) {
+                    ctx.strokeStyle = '#38bdf8';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.radius + 2, 0, Math.PI*2);
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        class Pedestrian {
+            constructor(x, y, type = 'tourist') {
+                this.x = x;
+                this.y = y;
+                this.type = type; // 'tourist', 'jogger', 'rich', 'ranger'
+                
+                // Set radius and properties based on type
+                this.radius = 18;
+                this.speed = 1.0 + Math.random() * 1.5;
+                this.color = '#3b82f6'; // default
+                
+                if (type === 'jogger') {
+                    this.speed = 3.0;
+                    this.color = '#ec4899';
+                } else if (type === 'rich') {
+                    this.speed = 0.8;
+                    this.color = '#f59e0b'; // Dropper of gold
+                } else if (type === 'ranger') {
+                    this.speed = 3.8;
+                    this.color = '#dc2626'; // Red ranger chaser
+                    this.radius = 20;
+                }
+
+                // Physics states
+                this.angle = Math.random() * Math.PI * 2;
+                this.vx = 0;
+                this.vy = 0;
+                this.targetAngle = this.angle;
+                this.targetTimer = Math.random() * 3.0;
+
+                // Hit/Stun statuses
+                this.isStunned = false;
+                this.stunTimer = 0;
+                this.isCoughing = false;
+                this.coughTimer = 0;
+
+                // Flight physics (when rammed)
+                this.isFlying = false;
+                this.flyHeight = 0;
+                this.flySpeedY = 0;
+                this.spinAngle = 0;
+
+                // Color tint for green fart choke state
+                this.greenFactor = 0; 
+                this.bubbleText = "";
+            }
+
+            update(dt) {
+                // If thrown into atmosphere (flying state)
+                if (this.isFlying) {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.flyHeight += this.flySpeedY;
+                    this.flySpeedY -= 0.5; // Simulated gravity
+                    this.spinAngle += 0.3;
+
+                    // Decelerate ground slide
+                    this.vx *= 0.98;
+                    this.vy *= 0.98;
+
+                    // Bounce back onto floor
+                    if (this.flyHeight <= 0) {
+                        this.flyHeight = 0;
+                        this.isFlying = false;
+                        this.isStunned = true;
+                        this.stunTimer = 2.0; // Knocked down stun duration
+                        this.vx = 0;
+                        this.vy = 0;
+
+                        // Spawn crash impact particles
+                        for (let i = 0; i < 8; i++) {
+                            particles.push(new Particle(this.x, this.y, '#e7e5e4', 8, (Math.random()-0.5)*4, (Math.random()-0.5)*4, 0.4));
+                        }
+
+                        // Rich people drop maximum wallet coin load on impact
+                        if (this.type === 'rich') {
+                            this.dropCoins(8 + Math.floor(Math.random()*6));
+                        } else {
+                            this.dropCoins(Math.random() < 0.5 ? 1 : 2);
+                        }
+                    }
+
+                    // Keep inside map bounding limits
+                    this.x = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.x));
+                    this.y = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.y));
+                    return;
+                }
+
+                // If currently knocked out / stunned on ground
+                if (this.isStunned) {
+                    this.stunTimer -= dt;
+                    if (this.stunTimer <= 0) {
+                        this.isStunned = false;
+                        this.speed *= 1.2; // Run slightly faster out of fear
+                    }
+                    return;
+                }
+
+                // Handle Green gaseous choke states
+                if (this.isCoughing) {
+                    this.coughTimer -= dt;
+                    this.greenFactor = Math.min(1.0, this.greenFactor + dt * 2);
+                    
+                    // Wander slowly in random choking circles
+                    this.angle += (Math.random() - 0.5) * 0.5;
+                    this.vx = Math.cos(this.angle) * (this.speed * 0.3);
+                    this.vy = Math.sin(this.angle) * (this.speed * 0.3);
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.coughTimer <= 0) {
+                        this.isCoughing = false;
+                    }
+
+                    // Chance to faint completely
+                    if (Math.random() < 0.005) {
+                        this.isStunned = true;
+                        this.stunTimer = 4.0;
+                        this.isCoughing = false;
+                        this.bubbleText = "🤢 Fainted!";
+                        this.dropCoins(1);
+                    }
+                    
+                    // Keep bounds
+                    this.x = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.x));
+                    this.y = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.y));
+                    return;
+                }
+
+                // Slowly clear green tint
+                if (this.greenFactor > 0) this.greenFactor -= dt * 0.1;
+
+                // ------------------ AI PATH BEHAVIORS ------------------
+                if (this.type === 'ranger') {
+                    // Security Ranger tracks down Goat to put a stop to the mayhem!
+                    const distToGoat = Math.hypot(goat.x - this.x, goat.y - this.y);
+                    
+                    if (distToGoat < 500) {
+                        // Aggro lock: pursuit angles
+                        this.targetAngle = Math.atan2(goat.y - this.y, goat.x - this.x);
+                        this.bubbleText = "🚨 HEY! STOP!";
+                    } else {
+                        // Casual patrolling patrol
+                        this.targetTimer -= dt;
+                        if (this.targetTimer <= 0) {
+                            this.targetAngle = Math.random() * Math.PI * 2;
+                            this.targetTimer = 2.0 + Math.random() * 4.0;
+                        }
+                    }
+                } else {
+                    // Pedestrians wander or flee
+                    const distToGoat = Math.hypot(goat.x - this.x, goat.y - this.y);
+
+                    if (distToGoat < 180 && (goat.ramTimer > 0 || goat.fartCooldown > 0)) {
+                        // FLEE! Screaming
+                        this.targetAngle = Math.atan2(this.y - goat.y, this.x - goat.x);
+                        this.bubbleText = Math.random() < 0.4 ? "😱 GOAT!!" : "🏃 HELP!";
+                    } else {
+                        // Casual pathing
+                        this.targetTimer -= dt;
+                        if (this.targetTimer <= 0) {
+                            this.targetAngle = Math.random() * Math.PI * 2;
+                            this.targetTimer = 3.0 + Math.random() * 5.0;
+                            this.bubbleText = "";
+                        }
+                    }
+                }
+
+                // Smoothly slide towards target angle
+                const diff = this.targetAngle - this.angle;
+                this.angle += Math.sin(diff) * 0.1;
+
+                // Move forward
+                this.vx = Math.cos(this.angle) * this.speed;
+                this.vy = Math.sin(this.angle) * this.speed;
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounding limits
+                this.x = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.x));
+                this.y = Math.max(this.radius, Math.min(MAP_SIZE - this.radius, this.y));
+            }
+
+            dropCoins(count) {
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const rDist = 10 + Math.random() * 40;
+                    coinsList.push(new Coin(
+                        this.x + Math.cos(angle) * rDist,
+                        this.y + Math.sin(angle) * rDist
+                    ));
+                }
+            }
+
+            draw() {
+                ctx.save();
+                
+                // When flying, scale size based on height of toss
+                const scale = 1.0 + (this.flyHeight / 150);
+                
+                ctx.translate(this.x, this.y);
+                if (this.isFlying) {
+                    ctx.rotate(this.spinAngle);
+                } else {
+                    ctx.rotate(this.angle);
+                }
+                ctx.scale(scale, scale);
+
+                // Body Shadow (Draw shadow smaller as pedestrian flies higher)
+                ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                ctx.beginPath();
+                ctx.arc(0, 15 - this.flyHeight, this.radius * 0.7, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Compute Color (Greenish if poisoned/choking)
+                let renderColor = this.color;
+                if (this.greenFactor > 0) {
+                    // Interpolate towards lime green
+                    renderColor = '#84cc16';
+                }
+
+                // Render Stunned / Knockout pose
+                if (this.isStunned && !this.isFlying) {
+                    ctx.rotate(Math.PI / 2); // Fall over
+                }
+
+                // --- Draw Human ---
+                // Outer Outline stroke for gorgeous cartoon separation
+                ctx.strokeStyle = '#1c1917';
+                ctx.lineWidth = 3;
+
+                // Shirt body
+                ctx.fillStyle = renderColor;
+                ctx.beginPath();
+                ctx.arc(0, -this.flyHeight, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Human Skin Head
+                ctx.fillStyle = '#fed7aa'; // Peach skin
+                ctx.beginPath();
+                ctx.arc(0, -this.flyHeight - 12, this.radius * 0.65, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Accessories/Hats depending on pedestrian category
+                if (this.type === 'ranger') {
+                    // Security Ranger Hat
+                    ctx.fillStyle = '#78350f'; // Brown hat
+                    ctx.fillRect(-15, -this.flyHeight - 20, 30, 4);
+                    ctx.fillRect(-8, -this.flyHeight - 26, 16, 8);
+                } else if (this.type === 'rich') {
+                    // Rich tourist golden glasses / crown
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.fillRect(-10, -this.flyHeight - 15, 20, 3);
+                } else if (this.type === 'jogger') {
+                    // Jogger sweatband
+                    ctx.fillStyle = '#ec4899';
+                    ctx.fillRect(-10, -this.flyHeight - 17, 20, 4);
+                }
+
+                // Little feet moving while walking
+                if (!this.isStunned && !this.isFlying) {
+                    ctx.fillStyle = '#1e293b';
+                    const bounce = Math.sin(Date.now() / 150) * 3;
+                    ctx.fillRect(-10, 10 + bounce, 6, 6);
+                    ctx.fillRect(4, 10 - bounce, 6, 6);
+                }
+
+                ctx.restore();
+
+                // Draw Text Speech Bubbles above head
+                if (this.bubbleText && !this.isFlying) {
+                    ctx.save();
+                    ctx.fillStyle = 'white';
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth = 2;
+                    ctx.font = 'bold 11px sans-serif';
+                    
+                    const txtWidth = ctx.measureText(this.bubbleText).width;
+                    const bX = this.x - txtWidth/2 - 6;
+                    const bY = this.y - 45;
+
+                    // Draw Speech Box bubble outline
+                    ctx.beginPath();
+                    ctx.roundRect(bX, bY, txtWidth + 12, 18, 5);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Bubble pointing triangle arrow
+                    ctx.beginPath();
+                    ctx.moveTo(this.x - 4, bY + 18);
+                    ctx.lineTo(this.x, bY + 23);
+                    ctx.lineTo(this.x + 4, bY + 18);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#1c1917';
+                    ctx.fillText(this.bubbleText, bX + 6, bY + 13);
+                    ctx.restore();
+                }
+            }
+        }
+
+        class FartCloud {
+            constructor(x, y, vx, vy, maxRadius = 45) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.radius = 10;
+                this.maxRadius = maxRadius;
+                this.alpha = 1.0;
+                this.life = 1.0; // Decay life from 1 to 0
+                this.decaySpeed = 0.4 + Math.random() * 0.3;
+            }
+
+            update(dt) {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vx *= 0.94; // Slow down rapidly to form a lingering cloud
+                this.vy *= 0.94;
+
+                // Expand diameter as cloud dissipates
+                this.radius += (this.maxRadius - this.radius) * 3.0 * dt;
+
+                this.life -= this.decaySpeed * dt;
+                this.alpha = Math.max(0, this.life);
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha * 0.45;
+                
+                // Soft gradient gaseous look
+                const grad = ctx.createRadialGradient(this.x, this.y, this.radius * 0.1, this.x, this.y, this.radius);
+                grad.addColorStop(0, '#bef264'); // neon lime center
+                grad.addColorStop(0.5, '#84cc16'); // green
+                grad.addColorStop(1, 'rgba(74, 222, 128, 0)'); // fade
+
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Draw occasional cartoon bio-hazard bubble circles inside
+                if (Math.random() < 0.05) {
+                    ctx.fillStyle = 'rgba(132, 204, 22, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(this.x + (Math.random()-0.5)*20, this.y + (Math.random()-0.5)*20, 5, 0, Math.PI*2);
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        class Prop {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.type = type; // 'tree', 'bush', 'trashcan', 'bench'
+                this.radius = 20;
+
+                if (type === 'tree') {
+                    this.radius = 35;
+                } else if (type === 'bush') {
+                    this.radius = 22;
+                } else if (type === 'trashcan') {
+                    this.radius = 15;
+                    this.hasSpilled = false;
+                } else if (type === 'bench') {
+                    this.radius = 25;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                // Draw drop shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.15)';
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y + this.radius*0.3, this.radius, this.radius*0.5, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                if (this.type === 'tree') {
+                    // Tree trunk
+                    ctx.fillStyle = '#78350f';
+                    ctx.fillRect(this.x - 8, this.y - 10, 16, 30);
+                    // Foliage
+                    ctx.fillStyle = '#065f46';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y - 15, 35, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.fillStyle = '#047857';
+                    ctx.beginPath();
+                    ctx.arc(this.x - 10, this.y - 25, 25, 0, Math.PI*2);
+                    ctx.fill();
+                } 
+                else if (this.type === 'bush') {
+                    ctx.fillStyle = '#0f766e';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 22, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.fillStyle = '#14b8a6';
+                    ctx.beginPath();
+                    ctx.arc(this.x + 8, this.y - 5, 15, 0, Math.PI*2);
+                    ctx.fill();
+                } 
+                else if (this.type === 'trashcan') {
+                    ctx.fillStyle = this.hasSpilled ? '#94a3b8' : '#cbd5e1';
+                    ctx.strokeStyle = '#475569';
+                    ctx.lineWidth = 3;
+
+                    if (this.hasSpilled) {
+                        // Tilted trashcan
+                        ctx.save();
+                        ctx.translate(this.x, this.y);
+                        ctx.rotate(Math.PI / 2.5);
+                        ctx.fillRect(-10, -15, 20, 30);
+                        ctx.strokeRect(-10, -15, 20, 30);
+                        ctx.restore();
+
+                        // Spilled trash junk (Procedural details)
+                        ctx.fillStyle = '#e2e8f0';
+                        ctx.beginPath();
+                        ctx.arc(this.x + 20, this.y + 10, 4, 0, Math.PI*2);
+                        ctx.arc(this.x + 10, this.y + 15, 3, 0, Math.PI*2);
+                        ctx.fill();
+                    } else {
+                        // Standing upright trashcan
+                        ctx.fillRect(this.x - 10, this.y - 15, 20, 30);
+                        ctx.strokeRect(this.x - 10, this.y - 15, 20, 30);
+                        // Trash inside peeking out
+                        ctx.fillStyle = '#fca5a5';
+                        ctx.fillRect(this.x - 8, this.y - 17, 16, 4);
+                    }
+                }
+                else if (this.type === 'bench') {
+                    ctx.fillStyle = '#78716c';
+                    ctx.fillRect(this.x - 30, this.y - 10, 60, 20);
+                    ctx.fillStyle = '#292524';
+                    ctx.fillRect(this.x - 25, this.y - 15, 5, 30);
+                    ctx.fillRect(this.x + 20, this.y - 15, 5, 30);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        class Coin {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 8;
+                this.bounceOffset = Math.random() * 100;
+            }
+
+            update(dt) {
+                // If magnet upgrade purchased, pull coins toward the goat!
+                const pullRadius = 40 + (upgrades.magnet.lvl * 35);
+                const distToGoat = Math.hypot(goat.x - this.x, goat.y - this.y);
+
+                if (distToGoat < pullRadius) {
+                    const angle = Math.atan2(goat.y - this.y, goat.x - this.x);
+                    // Speed of magnetic attraction scales with upgrade level
+                    const pullSpeed = (5 + upgrades.magnet.lvl * 2.5);
+                    this.x += Math.cos(angle) * pullSpeed;
+                    this.y += Math.sin(angle) * pullSpeed;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                // Floating up & down bounce animation
+                const bounce = Math.sin(Date.now() / 150 + this.bounceOffset) * 3;
+
+                // Shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y + 6, 6, 3, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                // Shiny golden coin
+                ctx.fillStyle = '#fbbf24';
+                ctx.strokeStyle = '#d97706';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y + bounce, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Inner detail glow
+                ctx.fillStyle = '#fef08a';
+                ctx.beginPath();
+                ctx.arc(this.x - 2, this.y - 2 + bounce, 2, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color, size, vx, vy, duration = 0.5) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.size = size;
+                this.vx = vx;
+                this.vy = vy;
+                this.alpha = 1.0;
+                this.life = 1.0;
+                this.duration = duration;
+            }
+
+            update(dt) {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= (1 / this.duration) * dt;
+                this.alpha = Math.max(0, this.life);
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        /*************************************************************
+         * 4. HELPER UTILITIES
+         *************************************************************/
+        function spawnMessage(x, y, text, color = '#fbbf24') {
+            messages.push({
+                x: x,
+                y: y,
+                text: text,
+                color: color,
+                alpha: 1.0,
+                vy: -1.2,
+                life: 1.0
+            });
+        }
+
+        // Screenshake state
+        let screenShakeAmount = 0;
+        function triggerScreenShake() {
+            screenShakeAmount = 15;
+        }
+
+        // Notification center banner
+        function triggerBanner(text) {
+            const banner = document.getElementById('gameNotification');
+            banner.innerText = text;
+            banner.classList.remove('scale-0');
+            banner.classList.add('scale-100');
+            setTimeout(() => {
+                banner.classList.remove('scale-100');
+                banner.classList.add('scale-0');
+            }, 2000);
+        }
+
+        // Return a hilarious mischief ranking title based on score
+        function getMischiefTitle(s) {
+            if (s < 200) return "Quiet Grazer";
+            if (s < 600) return "Mild Park Nuisance";
+            if (s < 1500) return "Tour Group Terrorist";
+            if (s < 3500) return "The CRAM Demon";
+            if (s < 7000) return "Biological Weapon";
+            return "THE GOATPOCALYPSE";
+        }
+
+        /*************************************************************
+         * 5. INITIALIZATION & SPAWN ENGINES
+         *************************************************************/
+        function spawnProps() {
+            props = [];
+            // Randomly disperse trees, bushes, trash cans over large sandbox
+            const densities = { tree: 120, bush: 100, trashcan: 60, bench: 60 };
+            
+            for (const [type, count] of Object.entries(densities)) {
+                for (let i = 0; i < count; i++) {
+                    const x = Math.random() * (MAP_SIZE - 200) + 100;
+                    const y = Math.random() * (MAP_SIZE - 200) + 100;
+                    props.push(new Prop(x, y, type));
+                }
+            }
+        }
+
+        function spawnPedestrians(count = 150) {
+            peds = [];
+            
+            // Initial seed of mixed tourists, joggers, rich people
+            for (let i = 0; i < count; i++) {
+                const x = Math.random() * (MAP_SIZE - 200) + 100;
+                const y = Math.random() * (MAP_SIZE - 200) + 100;
+                
+                // Distribute roles
+                const roll = Math.random();
+                let type = 'tourist';
+                if (roll < 0.20) type = 'jogger';
+                else if (roll < 0.32) type = 'rich';
+
+                peds.push(new Pedestrian(x, y, type));
+            }
+
+            // Always spawn some initial Security Rangers patrol officers
+            for (let i = 0; i < 15; i++) {
+                const x = Math.random() * (MAP_SIZE - 200) + 100;
+                const y = Math.random() * (MAP_SIZE - 200) + 100;
+                peds.push(new Pedestrian(x, y, 'ranger'));
+            }
+        }
+
+        // Dynamically spawns new security rangers as mischief goes up
+        function spawnRangerWave() {
+            triggerBanner("🚨 RANGERS MOBILIZING!");
+            for (let i = 0; i < 3; i++) {
+                // Spawn rangers just off-camera from goat position
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 600;
+                const rx = goat.x + Math.cos(angle) * dist;
+                const ry = goat.y + Math.sin(angle) * dist;
+                peds.push(new Pedestrian(
+                    Math.max(100, Math.min(MAP_SIZE - 100, rx)),
+                    Math.max(100, Math.min(MAP_SIZE - 100, ry)),
+                    'ranger'
+                ));
+            }
+        }
+
+        function resetGame() {
+            score = 0;
+            coins = 0;
+            stats = { totalCrams: 0, totalFarts: 0, escapedRangers: 0 };
+            
+            // Spawn goat at center of sandbox
+            goat = new Goat(MAP_SIZE / 2, MAP_SIZE / 2);
+            camera = { x: goat.x, y: goat.y, zoom: 1 };
+            
+            spawnProps();
+            spawnPedestrians();
+
+            fartClouds = [];
+            particles = [];
+            coinsList = [];
+            messages = [];
+            lastTime = performance.now();
+
+            // Reset Upgrade costs
+            Object.keys(upgrades).forEach(k => {
+                upgrades[k].lvl = 1;
+            });
+
+            updateHUD();
+        }
+
+        /*************************************************************
+         * 6. PHYSICS COLLISION AND RESOLUTION ENGINE
+         *************************************************************/
+        function handleCollisions() {
+            // GOAT colliding with PEDESTRIANS
+            peds.forEach(ped => {
+                if (ped.isFlying) return; // Ignore if flying high in clouds
+
+                const dist = Math.hypot(ped.x - goat.x, ped.y - goat.y);
+                const minDist = goat.radius + ped.radius;
+
+                if (dist < minDist) {
+                    // RAM Hit Check
+                    if (goat.ramTimer > 0) {
+                        // Deliver a devastating CRAM launch blow!
+                        ped.isFlying = true;
+                        ped.isStunned = true;
+                        
+                        // Toss angle is directly in Goat's vector
+                        ped.vx = Math.cos(goat.angle) * goat.getRamForce();
+                        ped.vy = Math.sin(goat.angle) * goat.getRamForce();
+                        ped.flySpeedY = 12 + upgrades.horns.lvl * 2.5; // High arc upward trajectory
+
+                        playImpactSound();
+
+                        // Add points & float texts
+                        const pointsGained = ped.type === 'ranger' ? 150 : 50;
+                        score += pointsGained;
+                        stats.totalCrams++;
+                        
+                        // Spawn impact explosion bursts
+                        for (let i = 0; i < 15; i++) {
+                            const rAngle = Math.random() * Math.PI*2;
+                            const rSpeed = 2 + Math.random() * 5;
+                            particles.push(new Particle(ped.x, ped.y, '#f43f5e', 8, Math.cos(rAngle)*rSpeed, Math.sin(rAngle)*rSpeed, 0.4));
+                        }
+
+                        // Generate comical "CRAM!" popups
+                        spawnMessage(ped.x, ped.y - 40, "CRAAAAAAM!", '#f43f5e');
+                        spawnMessage(ped.x, ped.y - 20, `+${pointsGained} Score`, '#fbbf24');
+
+                        // Chance to spawn special combo notification
+                        if (stats.totalCrams % 5 === 0) {
+                            triggerBanner(`RAMMING SPREE x${stats.totalCrams}!`);
+                        }
+
+                        // Increase Security threat triggers
+                        if (Math.random() < 0.25) {
+                            spawnRangerWave();
+                        }
+
+                        updateHUD();
+                    } 
+                    else if (ped.type === 'ranger' && !ped.isStunned && !ped.isCoughing) {
+                        // Caught by Ranger!
+                        gameOver();
+                    }
+                    else {
+                        // Gentle nudge push physically away so goat doesn't clip
+                        const angle = Math.atan2(ped.y - goat.y, ped.x - goat.x);
+                        ped.x += Math.cos(angle) * 3;
+                        ped.y += Math.sin(angle) * 3;
+                    }
+                }
+            });
+
+            // TOXIC GAS (Fart Clouds) colliding with PEDESTRIANS
+            fartClouds.forEach(cloud => {
+                peds.forEach(ped => {
+                    if (ped.isFlying || ped.isStunned || ped.isCoughing) return;
+
+                    const dist = Math.hypot(ped.x - cloud.x, ped.y - cloud.y);
+                    // Hit if inside expanding gas bubble
+                    if (dist < cloud.radius) {
+                        ped.isCoughing = true;
+                        ped.coughTimer = 4.0 * upgrades.fart.lvl * 0.7; // Chokes based on diet upgrade
+                        ped.greenFactor = 0.8;
+                        ped.bubbleText = Math.random() < 0.5 ? "🤢 *COUGH*" : "🤮 MY EYES!";
+
+                        // Fart Score rewards
+                        const points = ped.type === 'ranger' ? 80 : 30;
+                        score += points;
+                        
+                        spawnMessage(ped.x, ped.y - 20, `+${points} Toxic Score`, '#a3e635');
+                        updateHUD();
+                    }
+                });
+            });
+
+            // GOAT colliding with COINS
+            for (let i = coinsList.length - 1; i >= 0; i--) {
+                const coin = coinsList[i];
+                const dist = Math.hypot(coin.x - goat.x, coin.y - goat.y);
+
+                if (dist < goat.radius + coin.radius) {
+                    // Collect item!
+                    coins++;
+                    score += 10;
+                    playCoinSound();
+                    
+                    // Tiny coin glow bursts
+                    for (let j = 0; j < 5; j++) {
+                        particles.push(new Particle(coin.x, coin.y, '#fef08a', 4, (Math.random()-0.5)*3, (Math.random()-0.5)*3, 0.3));
+                    }
+
+                    // float coin indicator
+                    spawnMessage(coin.x, coin.y, "+1 🪙", '#fcd34d');
+
+                    // Remove from list
+                    coinsList.splice(i, 1);
+                    updateHUD();
+                }
+            }
+
+            // GOAT and PEDESTRIANS colliding with SOLID PARK PROPS
+            props.forEach(prop => {
+                const entities = [goat, ...peds];
+                entities.forEach(ent => {
+                    if (ent.isFlying) return;
+
+                    const dist = Math.hypot(prop.x - ent.x, prop.y - ent.y);
+                    const minDist = ent.radius + prop.radius * 0.8;
+
+                    if (dist < minDist) {
+                        // Push out of solid obstacle
+                        const angle = Math.atan2(ent.y - prop.y, ent.x - prop.x);
+                        const overlap = minDist - dist;
+                        ent.x += Math.cos(angle) * overlap;
+                        ent.y += Math.sin(angle) * overlap;
+
+                        // Goat ramming trashcan spills coins!
+                        if (ent === goat && goat.ramTimer > 0 && prop.type === 'trashcan' && !prop.hasSpilled) {
+                            prop.hasSpilled = true;
+                            prop.radius = 25; // larger boundary flat
+                            
+                            playImpactSound();
+                            triggerScreenShake();
+                            
+                            // Spill litter & cash!
+                            prop.hasSpilled = true;
+                            const coinSpillCount = 4 + Math.floor(Math.random() * 5);
+                            for (let j = 0; j < coinSpillCount; j++) {
+                                const dropAngle = Math.random() * Math.PI*2;
+                                const dist = 20 + Math.random()*30;
+                                coinsList.push(new Coin(prop.x + Math.cos(dropAngle)*dist, prop.y + Math.sin(dropAngle)*dist));
+                            }
+                            spawnMessage(prop.x, prop.y - 30, "🗑️ TRASHED!", '#ef4444');
+                        }
+                    }
+                });
+            });
+        }
+
+        /*************************************************************
+         * 7. UPDATE & DRAW CORE ENGINE
+         *************************************************************/
+        function update(dt) {
+            if (gameState !== 'playing') return;
+
+            // Update main player goat
+            goat.update(dt);
+
+            // Update Pedestrians
+            peds.forEach(ped => ped.update(dt));
+
+            // Update Gas particles
+            for (let i = fartClouds.length - 1; i >= 0; i--) {
+                const cloud = fartClouds[i];
+                cloud.update(dt);
+                if (cloud.life <= 0) fartClouds.splice(i, 1);
+            }
+
+            // Update active coins
+            coinsList.forEach(coin => coin.update(dt));
+
+            // Update FX Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update(dt);
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+
+            // Update floating float text messages
+            for (let i = messages.length - 1; i >= 0; i--) {
+                const msg = messages[i];
+                msg.y += msg.vy;
+                msg.life -= dt;
+                msg.alpha = Math.max(0, msg.life);
+                if (msg.life <= 0) messages.splice(i, 1);
+            }
+
+            // Resolve Physics Overlaps/Bounces
+            handleCollisions();
+
+            // Camera Tracking System (Smoothly slide towards goat position)
+            camera.x += (goat.x - camera.x) * 0.1;
+            camera.y += (goat.y - camera.y) * 0.1;
+
+            // Cap camera offsets to map boundaries so park margins don't bleed out of bounds
+            const viewWidth = canvas.width;
+            const viewHeight = canvas.height;
+            camera.x = Math.max(viewWidth / 2, Math.min(MAP_SIZE - viewWidth / 2, camera.x));
+            camera.y = Math.max(viewHeight / 2, Math.min(MAP_SIZE - viewHeight / 2, camera.y));
+
+            // Decrement screenshake mechanics
+            if (screenShakeAmount > 0) {
+                screenShakeAmount -= dt * 40;
+                if (screenShakeAmount < 0) screenShakeAmount = 0;
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            
+            // Apply Screenshake Transform Matrices
+            if (screenShakeAmount > 0) {
+                const shakeX = (Math.random() - 0.5) * screenShakeAmount;
+                const shakeY = (Math.random() - 0.5) * screenShakeAmount;
+                ctx.translate(shakeX, shakeY);
+            }
+
+            // Translate camera frame (Follow player goat)
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.translate(-camera.x, -camera.y);
+
+            // ------------------ DRAW GROUND PATHWAYS / GRASS ------------------
+            // Draw giant lawn background grid lines
+            ctx.fillStyle = '#0f766e'; // dark lawn shade green
+            ctx.fillRect(0, 0, MAP_SIZE, MAP_SIZE);
+
+            // Nice retro checkerboard lawn tiles
+            const tileSize = 200;
+            ctx.fillStyle = '#115e59'; // alternative tile shade
+            for (let x = 0; x < MAP_SIZE; x += tileSize * 2) {
+                for (let y = 0; y < MAP_SIZE; y += tileSize * 2) {
+                    ctx.fillRect(x, y, tileSize, tileSize);
+                    ctx.fillRect(x + tileSize, y + tileSize, tileSize, tileSize);
+                }
+            }
+
+            // Draw sand gravel sandbox path borders
+            ctx.strokeStyle = '#d97706';
+            ctx.lineWidth = 15;
+            ctx.strokeRect(0, 0, MAP_SIZE, MAP_SIZE);
+
+            // Decorative pathways in park (Drawing simple SVGs / path lines)
+            ctx.strokeStyle = 'rgba(217, 119, 6, 0.25)';
+            ctx.lineWidth = 60;
+            ctx.beginPath();
+            ctx.moveTo(100, MAP_SIZE / 2);
+            ctx.lineTo(MAP_SIZE - 100, MAP_SIZE / 2);
+            ctx.moveTo(MAP_SIZE / 2, 100);
+            ctx.lineTo(MAP_SIZE / 2, MAP_SIZE - 100);
+            ctx.stroke();
+
+            // ------------------ SORT AND RENDER ENTITIES ------------------
+            // Y-sorting all renderable elements (Props, Goat, Pedestrians) for correct depth illusion
+            const renderQueue = [
+                ...props,
+                ...peds,
+                ...coinsList,
+                goat
+            ];
+            
+            renderQueue.sort((a, b) => a.y - b.y);
+
+            // Render Gas farts underneath hikers to show ground gas coverage
+            fartClouds.forEach(cloud => cloud.draw());
+
+            // Render actual sorted entity list
+            renderQueue.forEach(item => {
+                if (item) item.draw();
+            });
+
+            // Draw dust particle visuals
+            particles.forEach(p => p.draw());
+
+            // Render floating text messages/popups (e.g. "+50 Score")
+            messages.forEach(msg => {
+                ctx.save();
+                ctx.globalAlpha = msg.alpha;
+                ctx.fillStyle = msg.color;
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 3;
+                ctx.font = 'bold 15px sans-serif';
+                ctx.font = '20px "Fredoka One", cursive';
+                ctx.textAlign = 'center';
+                ctx.strokeText(msg.text, msg.x, msg.y);
+                ctx.fillText(msg.text, msg.x, msg.y);
+                ctx.restore();
+            });
+
+            ctx.restore();
+        }
+
+        /*************************************************************
+         * 8. RUNTIME LOOP & DELTATE TIMER
+         *************************************************************/
+        function gameLoop(time) {
+            // Delta time math
+            const dt = Math.min((time - lastTime) / 1000, 0.1); // Clamp dt to prevent frame lag warping
+            lastTime = time;
+
+            update(dt);
+            draw();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        /*************************************************************
+         * 9. UI INTERACTIONS & EVENT LISTENERS
+         *************************************************************/
+        function updateHUD() {
+            document.getElementById('scoreVal').innerText = score;
+            document.getElementById('coinVal').innerText = coins;
+            document.getElementById('shopCoinVal').innerText = coins;
+
+            const rank = getMischiefTitle(score);
+            document.getElementById('rankTitle').innerText = rank;
+
+            // Stamina / Ram percentage bar
+            if (goat) {
+                const ramBar = document.getElementById('ramBar');
+                const p = Math.max(0, Math.min(100, (goat.stamina / goat.maxStamina) * 100));
+                ramBar.style.width = `${p}%`;
+                document.getElementById('ramPercent').innerText = `${Math.round(p)}%`;
+                
+                // Color change on bar if too low
+                if (p < 35) {
+                    ramBar.className = "bg-gradient-to-r from-red-500 to-orange-500 h-full w-full transition-all duration-75";
+                } else {
+                    ramBar.className = "bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-full transition-all duration-75";
+                }
+
+                // Fart Bar
+                const fartBar = document.getElementById('fartBar');
+                const fp = Math.max(0, Math.min(100, (goat.fartCharge / 100) * 100));
+                fartBar.style.width = `${fp}%`;
+                document.getElementById('fartPercent').innerText = `${Math.round(fp)}%`;
+
+                if (fp < 30) {
+                    fartBar.className = "bg-gradient-to-r from-red-500 to-amber-500 h-full w-full transition-all duration-75";
+                } else {
+                    fartBar.className = "bg-gradient-to-r from-lime-400 to-green-600 h-full w-full transition-all duration-75";
+                }
+            }
+        }
+
+        function openShop() {
+            if (gameState === 'gameover') return;
+            gameState = 'shop';
+            document.getElementById('shopModal').classList.remove('hidden');
+            updateShopButtons();
+        }
+
+        function closeShop() {
+            gameState = 'playing';
+            document.getElementById('shopModal').classList.add('hidden');
+            lastTime = performance.now(); // reset delta clock to avoid speed surge
+        }
+
+        // Compute power-up dynamic purchase prices
+        function getUpgradeCost(key) {
+            const up = upgrades[key];
+            return Math.floor(up.baseVal * Math.pow(up.scale, up.lvl - 1));
+        }
+
+        function buyUpgrade(key) {
+            const item = upgrades[key];
+            if (item.lvl >= item.max) return;
+
+            const cost = getUpgradeCost(key);
+            if (coins >= cost) {
+                coins -= cost;
+                item.lvl++;
+                
+                playUpgradeSound();
+                spawnMessage(goat.x, goat.y - 40, "🎉 LEVEL UP!", '#34d399');
+                triggerBanner(`${key.toUpperCase()} UPGRADED!`);
+
+                updateHUD();
+                updateShopButtons();
+            } else {
+                // Not enough cash animation/beep
+                shoutCram(); // Goat grunts out of poverty
+                triggerBanner("❌ INSUBSTANTIAL FUNDS!");
+            }
+        }
+
+        function updateShopButtons() {
+            // Re-render Levels and Cost indicators in DOM elements
+            Object.keys(upgrades).forEach(key => {
+                const item = upgrades[key];
+                const cost = getUpgradeCost(key);
+                const hasMaxed = item.lvl >= item.max;
+
+                // Capitalize first letter of element handles
+                const keyCap = key.charAt(0).toUpperCase() + key.slice(1);
+                
+                document.getElementById(`lvl${keyCap}`).innerText = item.lvl;
+                document.getElementById(`cost${keyCap}`).innerText = hasMaxed ? 'MAX' : cost;
+
+                const btn = document.getElementById(`buy${keyCap}Btn`);
+                if (hasMaxed) {
+                    btn.disabled = true;
+                    btn.innerText = "MAX LEVEL";
+                } else {
+                    btn.disabled = coins < cost;
+                    btn.innerHTML = `<span>Buy</span><span class="flex items-center gap-0.5 bg-black/10 px-2 py-0.5 rounded-md">${cost}🪙</span>`;
                 }
             });
         }
+
+        function gameOver() {
+            gameState = 'gameover';
+            playBustedSound();
+
+            document.getElementById('gameOverMenu').classList.remove('hidden');
+            document.getElementById('hud').classList.add('hidden');
+            document.getElementById('mobileControls').classList.add('hidden');
+
+            // Render End statistics
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('finalCrams').innerText = stats.totalCrams;
+            document.getElementById('finalFarts').innerText = stats.totalFarts;
+            document.getElementById('finalRangers').innerText = Math.floor(score / 400); // estimated escapes
+            document.getElementById('finalTitle').innerText = getMischiefTitle(score).toUpperCase();
+        }
+
+        /*************************************************************
+         * 10. INPUT & MOBILE TOUCH HANDLERS
+         *************************************************************/
+        function setupControls() {
+            // Resize Canvas to fully fit container dynamically
+            function resizeCanvas() {
+                canvas.width = gameContainer.clientWidth;
+                canvas.height = gameContainer.clientHeight;
+                if (goat) {
+                    camera.x = goat.x;
+                    camera.y = goat.y;
+                }
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // Keyboard keydown tracking
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'KeyP' || e.code === 'Escape') {
+                    if (gameState === 'playing') openShop();
+                    else if (gameState === 'shop') closeShop();
+                }
+
+                if (gameState !== 'playing') return;
+
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    goat.ram();
+                }
+                if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+                    e.preventDefault();
+                    goat.fart();
+                }
+
+                // Track movement keys
+                if (e.key in keys) keys[e.key] = true;
+                if (e.code in keys) keys[e.code] = true;
+            });
+
+            window.addEventListener('keyup', (e) => {
+                if (e.key in keys) keys[e.key] = false;
+                if (e.code in keys) keys[e.code] = false;
+            });
+
+            // Touch device layout setup
+            window.addEventListener('touchstart', () => {
+                if (!isTouchDevice) {
+                    isTouchDevice = true;
+                    // Reveal mobile virtual layouts
+                    document.getElementById('mobileControls').classList.remove('hidden');
+                }
+            }, { passive: true });
+
+            // On-screen Virtual Joystick calculations
+            const zone = document.getElementById('joystickZone');
+            const knob = document.getElementById('joystickKnob');
+
+            zone.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                joystickActive = true;
+                const touch = e.touches[0];
+                const rect = zone.getBoundingClientRect();
+                joystickStart.x = rect.left + rect.width / 2;
+                joystickStart.y = rect.top + rect.height / 2;
+            });
+
+            zone.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!joystickActive) return;
+
+                const touch = e.touches[0];
+                const dx = touch.clientX - joystickStart.x;
+                const dy = touch.clientY - joystickStart.y;
+                const distance = Math.hypot(dx, dy);
+                const maxRadius = 50; // max travel bound for stick knob
+
+                const angle = Math.atan2(dy, dx);
+                const travel = Math.min(distance, maxRadius);
+
+                // Push knob inside bounds
+                const kx = Math.cos(angle) * travel;
+                const ky = Math.sin(angle) * travel;
+                knob.style.transform = `translate(${kx}px, ${ky}px)`;
+
+                // Store normalized direction values for goat movement engine
+                joystickVector.x = Math.cos(angle) * (travel / maxRadius);
+                joystickVector.y = Math.sin(angle) * (travel / maxRadius);
+            });
+
+            const resetJoystick = () => {
+                joystickActive = false;
+                knob.style.transform = 'translate(0px, 0px)';
+                joystickVector = { x: 0, y: 0 };
+            };
+
+            zone.addEventListener('touchend', resetJoystick);
+            zone.addEventListener('touchcancel', resetJoystick);
+
+            // On-screen Mobile Action Buttons setup
+            document.getElementById('mobileRamBtn').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (gameState === 'playing') goat.ram();
+            });
+
+            document.getElementById('mobileFartBtn').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (gameState === 'playing') goat.fart();
+            });
+
+            // Game State UI triggers
+            document.getElementById('startGameBtn').addEventListener('click', () => {
+                initAudio();
+                shoutCram(); // Shout on click
+                
+                document.getElementById('mainMenu').classList.add('hidden');
+                document.getElementById('hud').classList.remove('hidden');
+                
+                gameState = 'playing';
+                resetGame();
+            });
+
+            // Re-load game overlay trigger
+            document.getElementById('restartGameBtn').addEventListener('click', () => {
+                document.getElementById('gameOverMenu').classList.add('hidden');
+                document.getElementById('hud').classList.remove('hidden');
+                if (isTouchDevice) {
+                    document.getElementById('mobileControls').classList.remove('hidden');
+                }
+                
+                gameState = 'playing';
+                resetGame();
+                shoutCram();
+            });
+
+            // Shop UI triggers
+            document.getElementById('openShopBtn').addEventListener('click', openShop);
+            document.getElementById('closeShopBtn').addEventListener('click', closeShop);
+            document.getElementById('resumeShopBtn').addEventListener('click', closeShop);
+
+            // Audio Toggle trigger button
+            const audioBtn = document.getElementById('soundToggleBtn');
+            audioBtn.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                audioBtn.innerText = soundEnabled ? '🔊' : '🔇';
+                audioBtn.className = soundEnabled 
+                    ? "bg-stone-800 hover:bg-stone-700 border border-stone-700 p-2 rounded-xl flex items-center justify-center shadow-lg" 
+                    : "bg-red-950 hover:bg-red-900 border border-red-800 p-2 rounded-xl flex items-center justify-center shadow-lg";
+            });
+
+            // Sound Synth preview test button on start screen
+            document.getElementById('testAudioBtn').addEventListener('click', () => {
+                initAudio();
+                playFartSound();
+            });
+        }
+
+        /*************************************************************
+         * 11. BOOTSTRAPPING WINDOW TRIGGER
+         *************************************************************/
+        window.onload = function() {
+            // Bind everything together
+            setupControls();
+            
+            // Show custom hints/credits
+            document.getElementById('audioHint').classList.remove('hidden');
+
+            // Boot up animation runner frame
+            requestAnimationFrame(gameLoop);
+        };
     </script>
 </body>
 </html>
