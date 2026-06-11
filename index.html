@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POFT 1301: Business English - Interactive Syllabus</title>
+    <style>
+        :root {
+            --mcc-blue: #164173;
+            --mcc-dark: #0f2c52;
+            --text-dark: #333333;
+            --bg-light: #f4f7f6;
+            --bg-card: #ffffff;
+            --border-color: #e0e0e0;
+            --yellow-light: #ffeb3b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Layout */
+        aside {
+            width: 280px;
+            background-color: var(--mcc-blue);
+            color: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: var(--mcc-dark);
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        nav {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        nav button {
+            width: 100%;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: left;
+            padding: 12px 25px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        nav button:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        nav button.active {
+            background-color: rgba(255,255,255,0.15);
+            color: white;
+            border-left: 4px solid var(--yellow-light);
+            font-weight: bold;
+        }
+
+        /* Main Content Area */
+        main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1000px;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & UI Components */
+        h2 {
+            color: var(--mcc-blue);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--mcc-blue);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--mcc-dark);
+            margin: 20px 0 10px 0;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1xl 1fr;
+            gap: 20px;
+        }
+        @media(min-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr 1fr; }
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--mcc-blue);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Traffic Light Alert Component */
+        .ai-banner {
+            border-left: 6px solid #fbc02d;
+            background-color: #fffde7;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        /* Interactive Calculator */
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .calc-row input {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        #calc-btn {
+            background-color: var(--mcc-blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #calc-btn:hover {
+            background-color: var(--mcc-dark);
+        }
+
+        #calc-output {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <h1>POFT 1301 O080</h1>
+            <p>Business English (Online)</p>
+            <p>Fall 2026</p>
+        </div>
+        <nav>
+            <button class="nav-btn active" onclick="switchSection('overview')">Course Overview</button>
+            <button class="nav-btn" onclick="switchSection('instructor')">Instructor Info</button>
+            <button class="nav-btn" onclick="switchSection('schedule')">Class Schedule</button>
+            <button class="nav-btn" onclick="switchSection('grading')">Grading Policies</button>
+            <button class="nav-btn" onclick="switchSection('attendance')">Attendance & Late Work</button>
+            <button class="nav-btn" onclick="switchSection('ai-policy')">Generative AI Policy</button>
+            <button class="nav-btn" onclick="switchSection('conduct')">Conduct & Integrity</button>
+        </nav>
+    </aside>
+
+    <main>
+        
+        <section id="overview" class="content-section active">
+            <h2>Course Overview</h2>
+            <div class="card">
+                <h3>Welcome to Business English!</h3>
+                <p>This is a <strong>16-week, fully online course</strong> offered by McLennan Community College.</p>
+            </div>
+            
+            <h3>Learning Outcomes & Objectives</h3>
+            <div class="card">
+                <p><strong>Departmental Student Learning Outcome:</strong> Using fundamental reading skills, apply basic rules of grammar, spelling, capitalization, number usage, and punctuation, and utilize terminology applicable to technical and business writing and when speaking.</p>
+                <br>
+                <ul>
+                    <li>Identify and apply the basic rules of grammar, spelling, capitalization, number usage, and punctuation.</li>
+                    <li>Utilize terminology applicable to technical and business writing.</li>
+                    <li>Develop proofreading and editing skills.</li>
+                    <li>Write sentences and paragraphs while structuring sentence types properly.</li>
+                    <li>Define and apply gender neutrality to writing content.</li>
+                </ul>
+            </div>
+
+            <h3>Required Materials</h3>
+            <div class="card">
+                <p>Both of your required text resources are Open Educational Resources (OER) and are <strong>provided for free as PDFs inside Brightspace</strong>:</p>
+                <ul>
+                    <li><em>Business English for Success</em></li>
+                    <li><em>Business Writing Style Guide</em></li>
+                </ul>
+                <p><strong>Hardware/Software:</strong> You must have internet access and either Google Docs or MS Office. MCC students can download MS Office for free by registering their student email address on the Microsoft Education platform. If you lack local device access, you can use the MCC Library or the Office Technology Careers Lab (Business and Technology Building, 1st floor).</p>
+            </div>
+        </section>
+
+        <section id="instructor" class="content-section">
+            <h2>Instructor Information</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Contact Information</h3>
+                    <p><strong>Instructor:</strong> John Ghazzagh</p>
+                    <p><strong>Email:</strong> <a href="mailto:jghazzagh@mclennan.edu">jghazzagh@mclennan.edu</a></p>
+                    <p><strong>Office Phone:</strong> 254.299.8990</p>
+                    <p><strong>Office Location:</strong> LTC 222</p>
+                </div>
+                <div class="card">
+                    <h3>Office Hours & Communication</h3>
+                    <p><strong>Zoom Office Hours:</strong> Thursday 12:00 PM - 1:00 PM (or by appointment). The Zoom meeting link is available directly within Brightspace.</p>
+                    <br>
+                    <p><strong>Response Protocol:</strong></p>
+                    <ul>
+                        <li>Messages are checked during the workweek; expect up to a 24-hour turnaround window. Weekend communications will be addressed the following Monday.</li>
+                        <li>You <strong>must</strong> email from your official student account and include the course title in the subject line.</li>
+                        <li>Do not use the Brightspace instant messaging tool, as deliveries can be significantly delayed.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule" class="content-section">
+            <h2>Tentative Class Schedule</h2>
+            <div class="card">
+                <p>All regular weekly modules have assignments due strictly by <strong>11:59 PM on Sundays</strong>. Plan your schedule carefully to hit these timelines.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Week</th>
+                            <th>Week Starts (Monday)</th>
+                            <th>Assignment Due Date (11:59 PM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Week 1</td><td>January 12</td><td>Sunday, January 18</td></tr>
+                        <tr><td>Week 2</td><td>January 19</td><td>Sunday, January 25</td></tr>
+                        <tr><td>Week 3</td><td>January 26</td><td>Sunday, February 1</td></tr>
+                        <tr><td>Week 4</td><td>February 2</td><td>Sunday, February 8</td></tr>
+                        <tr><td>Week 5</td><td>February 9</td><td>Sunday, February 15</td></tr>
+                        <tr><td>Week 6</td><td>February 16</td><td>Sunday, February 22</td></tr>
+                        <tr><td>Week 7</td><td>February 23</td><td>Sunday, March 1</td></tr>
+                        <tr><td>Week 8</td><td>March 2</td><td>Sunday, March 8</td></tr>
+                        <tr style="background-color: #fffde7;"><td>Week 9</td><td>March 9</td><td><strong>Spring Break (No Assignments)</strong></td></tr>
+                        <tr><td>Week 10</td><td>March 16</td><td>Sunday, March 22</td></tr>
+                        <tr><td>Week 11</td><td>March 23</td><td>Sunday, March 29</td></tr>
+                        <tr><td>Week 12</td><td>March 30</td><td>Sunday, April 5</td></tr>
+                        <tr><td>Week 13</td><td>April 6</td><td>Sunday, April 12</td></tr>
+                        <tr><td>Week 14</td><td>April 13</td><td>Sunday, April 19</td></tr>
+                        <tr><td>Week 15</td><td>April 20</td><td>Sunday, April 26</td></tr>
+                        <tr><td>Week 16</td><td>April 27 (Finals)</td><td><strong>Monday, May 4</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="grading" class="content-section">
+            <h2>Grading Schemes & Calculator</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Weight Distribution</h3>
+                    <ul>
+                        <li><strong>Writing Assignments:</strong> 40%</li>
+                        <li><strong>Quizzes:</strong> 30%</li>
+                        <li><strong>Discussions:</strong> 20%</li>
+                        <li><strong>Final Exam:</strong> 10%</li>
+                    </ul>
+                    <p><small>*Quizzes score automatically in Brightspace. Written feedback is embedded within gradebook submission comments; you have exactly one week post-grade assignment to contest a score.</small></p>
+                </div>
+                
+                <div class="card" style="border-top: 4px solid var(--mcc-blue);">
+                    <h3>Weighted Grade Calculator</h3>
+                    <p style="font-size:0.85rem; margin-bottom:15px; color:#666;">Enter your average score (0-100) for each category:</p>
+                    
+                    <div class="calc-row">
+                        <label>Writing Assignments (40%):</label>
+                        <input type="number" id="calc-writing" min="0" max="100" placeholder="100">
+                    </div>
+                    <div class="calc-row">
+                        <label>Quizzes (30%):</label>
+                        <input type="number" id="calc-quizzes" min="0" max="100" placeholder="100">
+                    </div>
+                    <div class="calc-row">
+                        <label>Discussions (20%):</label>
+                        <input type="number" id="calc-discussions" min="0" max="100" placeholder="100">
+                    </div>
+                    <div class="calc-row">
+                        <label>Final Exam (10%):</label>
+                        <input type="number" id="calc-final" min="0" max="100" placeholder="100">
+                    </div>
+                    
+                    <button id="calc-btn" onclick="calculateGrade()">Calculate Total Grade</button>
+                    <div id="calc-output"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="attendance" class="content-section">
+            <h2>Attendance, Verification & Late Policies</h2>
+            
+            <h3>Census Date Requirements</h3>
+            <div class="card">
+                <p>To establish official course verification <strong>before the census date</strong>, you must actively complete and submit at least <strong>one formal assignment</strong> (such as a syllabus quiz, discussion board post, or first homework entry). Simply logging into Brightspace or sending an introductory email does not record attendance. Failure to submit an assignment before the census date results in an automatic administrative drop.</p>
+            </div>
+
+            <h3>General Absences & Mid-Term Withdrawal</h3>
+            <div class="card">
+                <p>If you fail to submit two consecutive weeks of module milestones without an officially documented excuse prior to the 60% completion checkpoint of the term, you will be withdrawn. Past the 60% marker, administrative drops cease; you will instead receive the raw cumulative grade earned at term's end.</p>
+            </div>
+
+            <h3>Late Work Concessions</h3>
+            <div class="card" style="border-left: 6px solid #d32f2f;">
+                <p><strong>Strict Policy:</strong> Assignments may be turned in up to <strong>one week late</strong>, subject to a flat <strong>30-point deduction</strong>. Submissions pushed beyond this late grace period automatically receive a score of zero.</p>
+                <br>
+                <p><em>Note: Filing late work does not bypass attendance frameworks. If you run into an emergency status, contact the instructor immediately to process accommodations.</em></p>
+            </div>
+        </section>
+
+        <section id="ai-policy" class="content-section">
+            <h2>Generative AI Usage Framework</h2>
+            <div class="ai-banner">
+                <h3>🚦 Category: Yellow Light (Conditional Use OK)</h3>
+                <p>Generative AI platforms should act strictly as supplemental tools to enhance individual conceptual clarity. They must not replace the direct core writing, analysis, or intellectual workload of this intensive course.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card" style="background-color: #e8f5e9;">
+                    <h3 style="color:#2e7d32;">Permitted Assistance</h3>
+                    <ul>
+                        <li>Structural outlining and initial brainstorming sessions.</li>
+                        <li>Generating external example paradigms for learning.</li>
+                        <li>Deconstructing complex assignment briefs.</li>
+                        <li>Basic grammar, mechanics, and spelling evaluations.</li>
+                    </ul>
+                </div>
+                <div class="card" style="background-color: #ffebee;">
+                    <h3 style="color:#c62828;">Prohibited Utilization</h3>
+                    <ul>
+                        <li>Directly composing submission emails, major content papers, essays, or coursework modules.</li>
+                        <li>Drafting forum discussion replies.</li>
+                        <li>Generating answers for tests, unit quizzes, or diagnostics.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Mandatory Transparency Metrics</h3>
+            <div class="card">
+                <p>If you utilize generative engines for allowed baseline research or brainstorming functions, you must strictly document the interactions:</p>
+                <ul>
+                    <li>Provide the <strong>exact textual prompts</strong> delivered to the utility.</li>
+                    <li>Clearly cite the specific platform version leveraged (e.g., ChatGPT, Claude, Gemini).</li>
+                </ul>
+                <p><strong>Plagiarism Alert:</strong> Copying/pasting un-attributed AI outputs constitutes academic fraud and receives a zero on the first offense.</p>
+            </div>
+        </section>
+
+        <section id="conduct" class="content-section">
+            <h2>Academic Integrity & Behavioral Norms</h2>
+            
+            <h3>Academic Dishonesty Definitions</h3>
+            <div class="card">
+                <p><strong>Plagiarism:</strong> Passing off someone else's concepts, writing structures, or AI generation profiles without full explicit citation frameworks.</p>
+                <p><strong>Cheating:</strong> Swapping evaluation parameters with peers, relying on illicit text resources during assessments, or collaborating on individual assignments.</p>
+                <br>
+                <h4>Disciplinary Trajectory:</h4>
+                <ul>
+                    <li><strong>First Infraction:</strong> Immediate zero (0) grade on the affected submission alongside a documented warning notice.</li>
+                    <li><strong>Second Infraction:</strong> Formal escalation directly to the Student Discipline Committee for comprehensive institutional review.</li>
+                </ul>
+            </div>
+
+            <h3>Behavioral Standards</h3>
+            <div class="card">
+                <p>Students are expected to communicate respectfully and professionally, ensuring correct mechanics and respectful phrasing are preserved within all virtual environments. Displays of disruptive behavior will result in an immediate drop from the course roster and a student conduct referral.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Tab Section Toggling Routing Matrix
+        function switchSection(sectionId) {
+            // Remove active status highlights across all navigation components
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Deactivate and hide all layout panes
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Activate current targeted selection profiles
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Highlight the clicked navigation option
+            const clickedButton = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(sectionId));
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+            
+            // Scroll interface back to upper viewport limits cleanly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Weighted System Grade Calculator Math Formulation
+        function calculateGrade() {
+            // Retrieve raw value fields from input variables, defaulting empty strings to zero values
+            const writing = parseFloat(document.getElementById('calc-writing').value) || 0;
+            const quizzes = parseFloat(document.getElementById('calc-quizzes').value) || 0;
+            const discussions = parseFloat(document.getElementById('calc-discussions').value) || 0;
+            const finalExam = parseFloat(document.getElementById('calc-final').value) || 0;
+
+            // Apply specific structural coefficient weights to the metrics
+            const weightedScore = (writing * 0.40) + (quizzes * 0.30) + (discussions * 0.20) + (finalExam * 0.10);
+
+            // Output the dynamic content updates back into the UI target area
+            const outputDiv = document.getElementById('calc-output');
+            outputDiv.innerHTML = `Estimated Cumulative Grade: <span style="color: var(--mcc-blue);">${weightedScore.toFixed(2)}%</span>`;
+        }
+    </script>
+</body>
+</html>
